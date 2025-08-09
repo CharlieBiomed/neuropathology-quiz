@@ -1,150 +1,69 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Neuropathology Lab Techniques Quiz</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    h1, h2 { color: #2c3e50; }
-    .question { margin-bottom: 20px; }
-    .options input { margin-right: 10px; }
-    .feedback { margin-top: 5px; font-style: italic; }
-    #certificate { display: none; margin-top: 30px; border: 2px solid #2c3e50; padding: 20px; width: 80%; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Neuropathology Lab Techniques Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2 { text-align: center; }
+        .question { margin-bottom: 20px; }
+        .feedback { font-weight: bold; margin-top: 5px; }
+        .correct { color: green; }
+        .wrong { color: red; }
+        .certificate { display: none; border: 2px solid #000; padding: 20px; margin-top: 30px; text-align: center; }
+    </style>
 </head>
 <body>
-  <h1>Neuropathology Lab Techniques Quiz</h1>
-  <p>Please enter your name to begin:</p>
-  <input type="text" id="traineeName" placeholder="Your name here">
-  <button onclick="startQuiz()">Start Quiz</button>
+    <h1>Neuropathology Lab Techniques Quiz</h1>
+    <p>Please enter your name and answer all questions. You will receive feedback and a certificate if you score 80% or higher.</p>
+    <label for="traineeName">Name:</label>
+    <input type="text" id="traineeName" placeholder="Enter your name" />
+    <div id="quiz">
+<div class="question" id="q0"><p><strong>Q1: Which stain is commonly used to identify myelin in brain tissue?</strong></p><label><input type="radio" name="q0" value="H&E"> H&E</label><br><label><input type="radio" name="q0" value="Luxol Fast Blue"> Luxol Fast Blue</label><br><label><input type="radio" name="q0" value="PAS"> PAS</label><br><label><input type="radio" name="q0" value="Congo Red"> Congo Red</label><br><div class="feedback" id="feedback0"></div></div><div class="question" id="q1"><p><strong>Q2: What is the primary purpose of GFAP immunostaining?</strong></p><label><input type="radio" name="q1" value="Identify neurons"> Identify neurons</label><br><label><input type="radio" name="q1" value="Detect astrocytes"> Detect astrocytes</label><br><label><input type="radio" name="q1" value="Highlight blood vessels"> Highlight blood vessels</label><br><label><input type="radio" name="q1" value="Visualize microglia"> Visualize microglia</label><br><div class="feedback" id="feedback1"></div></div><div class="question" id="q2"><p><strong>Q3: Which fixative is most commonly used for brain tissue in histopathology?</strong></p><label><input type="radio" name="q2" value="Formalin"> Formalin</label><br><label><input type="radio" name="q2" value="Alcohol"> Alcohol</label><br><label><input type="radio" name="q2" value="Acetone"> Acetone</label><br><label><input type="radio" name="q2" value="Glutaraldehyde"> Glutaraldehyde</label><br><div class="feedback" id="feedback2"></div></div><div class="question" id="q3"><p><strong>Q4: What artefact is commonly caused by delayed fixation of brain tissue?</strong></p><label><input type="radio" name="q3" value="Freezing artefact"> Freezing artefact</label><br><label><input type="radio" name="q3" value="Autolysis"> Autolysis</label><br><label><input type="radio" name="q3" value="Crush artefact"> Crush artefact</label><br><label><input type="radio" name="q3" value="Staining artefact"> Staining artefact</label><br><div class="feedback" id="feedback3"></div></div><div class="question" id="q4"><p><strong>Q5: Which sectioning technique is used for rapid intraoperative diagnosis?</strong></p><label><input type="radio" name="q4" value="Paraffin embedding"> Paraffin embedding</label><br><label><input type="radio" name="q4" value="Frozen section"> Frozen section</label><br><label><input type="radio" name="q4" value="Cryostat section"> Cryostat section</label><br><label><input type="radio" name="q4" value="Resin embedding"> Resin embedding</label><br><div class="feedback" id="feedback4"></div></div><div class="question" id="q5"><p><strong>Q6: What is the role of silver staining in neuropathology?</strong></p><label><input type="radio" name="q5" value="Detect myelin"> Detect myelin</label><br><label><input type="radio" name="q5" value="Identify amyloid plaques"> Identify amyloid plaques</label><br><label><input type="radio" name="q5" value="Highlight neurofibrillary tangles"> Highlight neurofibrillary tangles</label><br><label><input type="radio" name="q5" value="Visualize nuclei"> Visualize nuclei</label><br><div class="feedback" id="feedback5"></div></div><div class="question" id="q6"><p><strong>Q7: Which marker is used to identify microglia in brain tissue?</strong></p><label><input type="radio" name="q6" value="GFAP"> GFAP</label><br><label><input type="radio" name="q6" value="CD68"> CD68</label><br><label><input type="radio" name="q6" value="Synaptophysin"> Synaptophysin</label><br><label><input type="radio" name="q6" value="NeuN"> NeuN</label><br><div class="feedback" id="feedback6"></div></div><div class="question" id="q7"><p><strong>Q8: What is the ideal thickness for paraffin sections of brain tissue?</strong></p><label><input type="radio" name="q7" value="2 µm"> 2 µm</label><br><label><input type="radio" name="q7" value="4 µm"> 4 µm</label><br><label><input type="radio" name="q7" value="6 µm"> 6 µm</label><br><label><input type="radio" name="q7" value="10 µm"> 10 µm</label><br><div class="feedback" id="feedback7"></div></div><div class="question" id="q8"><p><strong>Q9: Which stain is used to detect fungal organisms in brain infections?</strong></p><label><input type="radio" name="q8" value="Ziehl-Neelsen"> Ziehl-Neelsen</label><br><label><input type="radio" name="q8" value="PAS"> PAS</label><br><label><input type="radio" name="q8" value="Gram"> Gram</label><br><label><input type="radio" name="q8" value="Giemsa"> Giemsa</label><br><div class="feedback" id="feedback8"></div></div><div class="question" id="q9"><p><strong>Q10: What is the purpose of using control slides in immunohistochemistry?</strong></p><label><input type="radio" name="q9" value="To calibrate microscope"> To calibrate microscope</label><br><label><input type="radio" name="q9" value="To validate staining specificity"> To validate staining specificity</label><br><label><input type="radio" name="q9" value="To test fixative quality"> To test fixative quality</label><br><label><input type="radio" name="q9" value="To measure section thickness"> To measure section thickness</label><br><div class="feedback" id="feedback9"></div></div><div class="question" id="q10"><p><strong>Q11: Which embedding medium is used for electron microscopy of brain tissue?</strong></p><label><input type="radio" name="q10" value="Paraffin"> Paraffin</label><br><label><input type="radio" name="q10" value="Resin"> Resin</label><br><label><input type="radio" name="q10" value="Gelatin"> Gelatin</label><br><label><input type="radio" name="q10" value="Agarose"> Agarose</label><br><div class="feedback" id="feedback10"></div></div><div class="question" id="q11"><p><strong>Q12: What is the main advantage of using cryostat sections?</strong></p><label><input type="radio" name="q11" value="Better morphology"> Better morphology</label><br><label><input type="radio" name="q11" value="Rapid processing"> Rapid processing</label><br><label><input type="radio" name="q11" value="Enhanced staining"> Enhanced staining</label><br><label><input type="radio" name="q11" value="Long-term storage"> Long-term storage</label><br><div class="feedback" id="feedback11"></div></div><div class="question" id="q12"><p><strong>Q13: Which stain is used to detect amyloid in brain tissue?</strong></p><label><input type="radio" name="q12" value="Congo Red"> Congo Red</label><br><label><input type="radio" name="q12" value="Masson's Trichrome"> Masson's Trichrome</label><br><label><input type="radio" name="q12" value="H&E"> H&E</label><br><label><input type="radio" name="q12" value="PAS"> PAS</label><br><div class="feedback" id="feedback12"></div></div><div class="question" id="q13"><p><strong>Q14: What is the role of NeuN marker in neuropathology?</strong></p><label><input type="radio" name="q13" value="Identify astrocytes"> Identify astrocytes</label><br><label><input type="radio" name="q13" value="Detect neurons"> Detect neurons</label><br><label><input type="radio" name="q13" value="Highlight oligodendrocytes"> Highlight oligodendrocytes</label><br><label><input type="radio" name="q13" value="Visualize microglia"> Visualize microglia</label><br><div class="feedback" id="feedback13"></div></div><div class="question" id="q14"><p><strong>Q15: Which artefact results from excessive sectioning pressure?</strong></p><label><input type="radio" name="q14" value="Crush artefact"> Crush artefact</label><br><label><input type="radio" name="q14" value="Freezing artefact"> Freezing artefact</label><br><label><input type="radio" name="q14" value="Autolysis"> Autolysis</label><br><label><input type="radio" name="q14" value="Staining artefact"> Staining artefact</label><br><div class="feedback" id="feedback14"></div></div><div class="question" id="q15"><p><strong>Q16: What is the recommended temperature for cryostat sectioning?</strong></p><label><input type="radio" name="q15" value="-10°C"> -10°C</label><br><label><input type="radio" name="q15" value="-20°C"> -20°C</label><br><label><input type="radio" name="q15" value="-30°C"> -30°C</label><br><label><input type="radio" name="q15" value="-40°C"> -40°C</label><br><div class="feedback" id="feedback15"></div></div><div class="question" id="q16"><p><strong>Q17: Which stain is used to highlight lipofuscin pigment in neurons?</strong></p><label><input type="radio" name="q16" value="Sudan Black"> Sudan Black</label><br><label><input type="radio" name="q16" value="Congo Red"> Congo Red</label><br><label><input type="radio" name="q16" value="PAS"> PAS</label><br><label><input type="radio" name="q16" value="Luxol Fast Blue"> Luxol Fast Blue</label><br><div class="feedback" id="feedback16"></div></div><div class="question" id="q17"><p><strong>Q18: What is the function of mounting media in slide preparation?</strong></p><label><input type="radio" name="q17" value="Fix tissue"> Fix tissue</label><br><label><input type="radio" name="q17" value="Enhance contrast"> Enhance contrast</label><br><label><input type="radio" name="q17" value="Preserve stained sections"> Preserve stained sections</label><br><label><input type="radio" name="q17" value="Stain nuclei"> Stain nuclei</label><br><div class="feedback" id="feedback17"></div></div><div class="question" id="q18"><p><strong>Q19: Which marker is used to identify synaptic vesicles?</strong></p><label><input type="radio" name="q18" value="Synaptophysin"> Synaptophysin</label><br><label><input type="radio" name="q18" value="GFAP"> GFAP</label><br><label><input type="radio" name="q18" value="CD68"> CD68</label><br><label><input type="radio" name="q18" value="NeuN"> NeuN</label><br><div class="feedback" id="feedback18"></div></div><div class="question" id="q19"><p><strong>Q20: What is the purpose of antigen retrieval in immunohistochemistry?</strong></p><label><input type="radio" name="q19" value="Fix tissue"> Fix tissue</label><br><label><input type="radio" name="q19" value="Expose epitopes"> Expose epitopes</label><br><label><input type="radio" name="q19" value="Stain nuclei"> Stain nuclei</label><br><label><input type="radio" name="q19" value="Embed tissue"> Embed tissue</label><br><div class="feedback" id="feedback19"></div></div>
+    <button onclick="checkAnswers()">Submit Quiz</button>
+    <div id="scoreDisplay"></div>
+    <div class="certificate" id="certificate"></div>
+    <script>
+        const questions = [{"question": "Which stain is commonly used to identify myelin in brain tissue?", "options": ["H&E", "Luxol Fast Blue", "PAS", "Congo Red"], "correct": "Luxol Fast Blue"}, {"question": "What is the primary purpose of GFAP immunostaining?", "options": ["Identify neurons", "Detect astrocytes", "Highlight blood vessels", "Visualize microglia"], "correct": "Detect astrocytes"}, {"question": "Which fixative is most commonly used for brain tissue in histopathology?", "options": ["Formalin", "Alcohol", "Acetone", "Glutaraldehyde"], "correct": "Formalin"}, {"question": "What artefact is commonly caused by delayed fixation of brain tissue?", "options": ["Freezing artefact", "Autolysis", "Crush artefact", "Staining artefact"], "correct": "Autolysis"}, {"question": "Which sectioning technique is used for rapid intraoperative diagnosis?", "options": ["Paraffin embedding", "Frozen section", "Cryostat section", "Resin embedding"], "correct": "Frozen section"}, {"question": "What is the role of silver staining in neuropathology?", "options": ["Detect myelin", "Identify amyloid plaques", "Highlight neurofibrillary tangles", "Visualize nuclei"], "correct": "Highlight neurofibrillary tangles"}, {"question": "Which marker is used to identify microglia in brain tissue?", "options": ["GFAP", "CD68", "Synaptophysin", "NeuN"], "correct": "CD68"}, {"question": "What is the ideal thickness for paraffin sections of brain tissue?", "options": ["2 µm", "4 µm", "6 µm", "10 µm"], "correct": "4 µm"}, {"question": "Which stain is used to detect fungal organisms in brain infections?", "options": ["Ziehl-Neelsen", "PAS", "Gram", "Giemsa"], "correct": "PAS"}, {"question": "What is the purpose of using control slides in immunohistochemistry?", "options": ["To calibrate microscope", "To validate staining specificity", "To test fixative quality", "To measure section thickness"], "correct": "To validate staining specificity"}, {"question": "Which embedding medium is used for electron microscopy of brain tissue?", "options": ["Paraffin", "Resin", "Gelatin", "Agarose"], "correct": "Resin"}, {"question": "What is the main advantage of using cryostat sections?", "options": ["Better morphology", "Rapid processing", "Enhanced staining", "Long-term storage"], "correct": "Rapid processing"}, {"question": "Which stain is used to detect amyloid in brain tissue?", "options": ["Congo Red", "Masson"s Trichrome", "H&E", "PAS"], "correct": "Congo Red"}, {"question": "What is the role of NeuN marker in neuropathology?", "options": ["Identify astrocytes", "Detect neurons", "Highlight oligodendrocytes", "Visualize microglia"], "correct": "Detect neurons"}, {"question": "Which artefact results from excessive sectioning pressure?", "options": ["Crush artefact", "Freezing artefact", "Autolysis", "Staining artefact"], "correct": "Crush artefact"}, {"question": "What is the recommended temperature for cryostat sectioning?", "options": ["-10°C", "-20°C", "-30°C", "-40°C"], "correct": "-20°C"}, {"question": "Which stain is used to highlight lipofuscin pigment in neurons?", "options": ["Sudan Black", "Congo Red", "PAS", "Luxol Fast Blue"], "correct": "Sudan Black"}, {"question": "What is the function of mounting media in slide preparation?", "options": ["Fix tissue", "Enhance contrast", "Preserve stained sections", "Stain nuclei"], "correct": "Preserve stained sections"}, {"question": "Which marker is used to identify synaptic vesicles?", "options": ["Synaptophysin", "GFAP", "CD68", "NeuN"], "correct": "Synaptophysin"}, {"question": "What is the purpose of antigen retrieval in immunohistochemistry?", "options": ["Fix tissue", "Expose epitopes", "Stain nuclei", "Embed tissue"], "correct": "Expose epitopes"}];
 
-  <div id="quizContainer" style="display:none;">
-    <h2>Instructions</h2>
-    <p>Answer all 20 questions. Each correct answer earns 1 point. A score of 80% or higher will generate a certificate.</p>
-    <div id="questions"></div>
-    <button onclick="submitQuiz()">Submit Quiz</button>
-    <h3 id="scoreDisplay"></h3>
-    <div id="certificate"></div>
-  </div>
+        function checkAnswers() {
+            let score = 0;
+            const name = document.getElementById("traineeName").value || "Trainee";
 
-  <script>
-    const questions = [
-      {
-        q: "Which stain is commonly used to highlight myelin in brain tissue?",
-        options: ["H&E", "Luxol Fast Blue", "PAS", "Congo Red"],
-        answer: 1,
-        explanation: "Luxol Fast Blue is used to stain myelin, useful in demyelinating diseases."
-      },
-      {
-        q: "What is the purpose of using GFAP immunostaining?",
-        options: ["Identify neurons", "Detect astrocytes", "Highlight blood vessels", "Visualize microglia"],
-        answer: 1,
-        explanation: "GFAP is a marker for astrocytes and astrocytic tumors."
-      },
-      {
-        q: "Which fixative is most commonly used for brain tissue in histopathology?",
-        options: ["Formalin", "Alcohol", "Acetone", "Glutaraldehyde"],
-        answer: 0,
-        explanation: "Formalin is the standard fixative for preserving brain tissue morphology."
-      },
-      {
-        q: "What artefact is commonly seen in frozen sections?",
-        options: ["Shrinkage", "Crush artefact", "Freezing artefact", "Pigment deposition"],
-        answer: 2,
-        explanation: "Freezing artefact occurs due to ice crystal formation during rapid freezing."
-      },
-      {
-        q: "Which stain is used to detect fungal organisms in brain infections?",
-        options: ["Ziehl-Neelsen", "Gram stain", "GMS", "Masson's trichrome"],
-        answer: 2,
-        explanation: "GMS (Grocott's Methenamine Silver) stain highlights fungal cell walls."
-      },
-      {
-        q: "What is the role of cryostat in neuropathology labs?",
-        options: ["Embedding tissue", "Sectioning frozen tissue", "Fixing tissue", "Staining slides"],
-        answer: 1,
-        explanation: "Cryostat is used to cut thin sections of frozen tissue for rapid diagnosis."
-      },
-      {
-        q: "Which stain is used to detect amyloid deposits?",
-        options: ["Congo Red", "PAS", "H&E", "Toluidine Blue"],
-        answer: 0,
-        explanation: "Congo Red stain shows apple-green birefringence under polarized light for amyloid."
-      },
-      {
-        q: "What is the ideal thickness for paraffin sections in brain histology?",
-        options: ["2 µm", "4 µm", "6 µm", "10 µm"],
-        answer: 1,
-        explanation: "4 µm is standard for paraffin sections to balance resolution and tissue integrity."
-      },
-      {
-        q: "Which stain is used to highlight neurofibrillary tangles?",
-        options: ["Silver stain", "Masson's trichrome", "Oil Red O", "Alcian Blue"],
-        answer: 0,
-        explanation: "Silver stains like Bielschowsky highlight neurofibrillary tangles in Alzheimer's disease."
-      },
-      {
-        q: "What is the main hazard when handling brain tissue with prion disease?",
-        options: ["Radiation", "Chemical burns", "Infectivity", "Allergic reaction"],
-        answer: 2,
-        explanation: "Prion diseases are transmissible and require special handling precautions."
-      }
-    ];
+            questions.forEach((q, i) => {
+                const radios = document.getElementsByName("q" + i);
+                let selected = null;
+                for (const r of radios) {
+                    if (r.checked) selected = r;
+                }
+                const feedback = document.getElementById("feedback" + i);
+                if (selected) {
+                    if (selected.value === q.correct) {
+                        score++;
+                        feedback.textContent = "Correct!";
+                        feedback.className = "feedback correct";
+                    } else {
+                        feedback.textContent = "Wrong!";
+                        feedback.className = "feedback wrong";
+                    }
+                } else {
+                    feedback.textContent = "No answer selected.";
+                    feedback.className = "feedback wrong";
+                }
+            });
 
-    function startQuiz() {
-      const name = document.getElementById("traineeName").value.trim();
-      if (!name) {
-        alert("Please enter your name.");
-        return;
-      }
-      document.getElementById("quizContainer").style.display = "block";
-      const qDiv = document.getElementById("questions");
-      qDiv.innerHTML = "";
-      questions.forEach((q, i) => {
-        const div = document.createElement("div");
-        div.className = "question";
-        div.innerHTML = `<strong>Q${i+1}: ${q.q}</strong><br>`;
-        q.options.forEach((opt, j) => {
-          div.innerHTML += `<label class="options"><input type="radio" name="q${i}" value="${j}">${opt}</label><br>`;
-        });
-        div.innerHTML += `<div class="feedback" id="feedback${i}"></div>`;
-        qDiv.appendChild(div);
-      });
-    }
+            const percent = Math.round((score / questions.length) * 100);
+            document.getElementById("scoreDisplay").innerHTML = `<h2>${name}, your score is ${score}/${questions.length} (${percent}%)</h2>`;
 
-    function submitQuiz() {
-      let score = 0;
-      questions.forEach((q, i) => {
-        const selected = document.querySelector(`input[name="q${i}"]:checked`);
-        const feedback = document.getElementById(`feedback${i}`);
-        if (selected) {
-          const val = parseInt(selected.value);
-          if (val === q.answer) {
-            score++;
-            feedback.textContent = "✅ Correct! " + q.explanation;
-            feedback.style.color = "green";
-          } else {
-            feedback.textContent = "❌ Incorrect. " + q.explanation;
-            feedback.style.color = "red";
-          }
-        } else {
-          feedback.textContent = "❌ No answer selected.";
-          feedback.style.color = "red";
+            if (percent >= 80) {
+                document.getElementById("certificate").style.display = "block";
+                document.getElementById("certificate").innerHTML = `
+                    <h2>Certificate of Achievement</h2>
+                    <p>This certifies that <strong>${name}</strong> has successfully completed the Neuropathology Lab Techniques Quiz with a score of ${percent}%.</p>
+                `;
+            }
         }
-      });
-      const percent = (score / questions.length) * 100;
-      document.getElementById("scoreDisplay").textContent = `Your score: ${score}/${questions.length} (${percent.toFixed(1)}%)`;
-
-      if (percent >= 80) {
-        const name = document.getElementById("traineeName").value.trim();
-        const cert = document.getElementById("certificate");
-        cert.style.display = "block";
-        cert.innerHTML = `<h2>🎓 Certificate of Completion</h2>
-                          <p>This certifies that <strong>${name}</strong> has successfully completed the Neuropathology Lab Techniques Quiz with a score of ${percent.toFixed(1)}%.</p>
-                          <p>Date: ${new Date().toLocaleDateString()}</p>`;
-      }
-    }
-  </script>
+    </script>
 </body>
 </html>
