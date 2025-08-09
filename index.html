@@ -1,211 +1,150 @@
 
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>Neuropathology Lab Techniques Quiz</title>
-<style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .question { margin-bottom: 20px; }
-        .feedback { color: green; display: none; }
-    </style>
-<script>
-let score = 0;
-let totalQuestions = document.querySelectorAll('.question').length;
-
-function checkAnswer(button, correct) {
-    if (button.classList.contains('answered')) return;
-    button.classList.add('answered');
-    if (correct) {
-        score++;
-        button.style.backgroundColor = '#c8e6c9';
-    } else {
-        button.style.backgroundColor = '#ffcdd2';
-    }
-    let feedback = button.parentElement.querySelector('.feedback');
-    if (feedback) feedback.style.display = 'block';
-
-    // Check if all questions have been answered
-    let answeredButtons = document.querySelectorAll('.answered');
-    if (answeredButtons.length === totalQuestions) {
-        document.getElementById('scoreDisplay').innerText =
-            "Final Score: " + score + " out of " + totalQuestions;
-    }
-}
-</script>
+  <meta charset="UTF-8">
+  <title>Neuropathology Lab Techniques Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1, h2 { color: #2c3e50; }
+    .question { margin-bottom: 20px; }
+    .options input { margin-right: 10px; }
+    .feedback { margin-top: 5px; font-style: italic; }
+    #certificate { display: none; margin-top: 30px; border: 2px solid #2c3e50; padding: 20px; width: 80%; }
+  </style>
 </head>
-<body><div style="border:1px solid #ccc; padding:15px; margin-bottom:20px; background-color:#f9f9f9;"><h2>📘 Instructions for Using This Quiz</h2><ul><li>Enter your name in the field provided at the top of the quiz.</li><li>Answer each multiple-choice question by selecting the best option.</li><li>After each selection, you will receive instant feedback.</li><li>Your score will be tracked and displayed at the end of the quiz.</li><li>You can retake the quiz by refreshing the page.</li></ul></div>
-<div id="name-entry" style="margin-bottom: 20px;">
-<label for="traineeName"><strong>Enter your name:</strong></label>
-<input id="traineeName" name="traineeName" placeholder="Your name" type="text"/>
-<button onclick="startQuiz()">Start Quiz</button>
-</div>
-<div id="traineeDisplay" style="display:none; margin-bottom: 20px;">
-<h2>Welcome, <span id="displayName"></span>!</h2>
-</div>
-<div id="quiz" style="display:none;">
-</div>
-<script>
-        function startQuiz() {
-            var name = document.getElementById("traineeName").value;
-            if (name.trim() !== "") {
-                document.getElementById("displayName").textContent = name;
-                document.getElementById("traineeDisplay").style.display = "block";
-                document.getElementById("name-entry").style.display = "none";
-                document.getElementById("quiz").style.display = "block";
-            } else {
-                alert("Please enter your name.");
-            }
-        }
+<body>
+  <h1>Neuropathology Lab Techniques Quiz</h1>
+  <p>Please enter your name to begin:</p>
+  <input type="text" id="traineeName" placeholder="Your name here">
+  <button onclick="startQuiz()">Start Quiz</button>
 
-        const questions = [
-            {
-                q: "Which stain is commonly used to highlight myelin in brain tissue?",
-                options: ["H&E", "Luxol Fast Blue", "PAS", "Silver stain"],
-                answer: "Luxol Fast Blue",
-                explanation: "Luxol Fast Blue is specific for myelin, useful in identifying demyelination."
-            },
-            {
-                q: "What is the purpose of GFAP immunostaining?",
-                options: ["Identify neurons", "Detect astrocytes", "Highlight blood vessels", "Stain microglia"],
-                answer: "Detect astrocytes",
-                explanation: "GFAP is a marker for astrocytes and astrocytic tumors."
-            },
-            {
-                q: "Which fixative is most commonly used for brain tissue?",
-                options: ["Formalin", "Alcohol", "Acetone", "Bouin's solution"],
-                answer: "Formalin",
-                explanation: "Formalin preserves brain tissue morphology effectively for histopathology."
-            },
-            {
-                q: "What artefact is caused by delayed fixation of brain tissue?",
-                options: ["Freezing artefact", "Autolysis", "Crush artefact", "Pigment deposition"],
-                answer: "Autolysis",
-                explanation: "Delayed fixation leads to autolysis, degrading tissue quality."
-            },
-            {
-                q: "Which stain is used to detect fungal organisms in brain infections?",
-                options: ["Gram stain", "Ziehl-Neelsen", "PAS", "Congo red"],
-                answer: "PAS",
-                explanation: "PAS highlights fungal cell walls, useful in diagnosing fungal infections."
-            },
-            {
-                q: "What is the role of silver staining in neuropathology?",
-                options: ["Detect bacteria", "Highlight neurofibrillary tangles", "Stain astrocytes", "Identify myelin"],
-                answer: "Highlight neurofibrillary tangles",
-                explanation: "Silver stains are used to visualize tangles in neurodegenerative diseases."
-            },
-            {
-                q: "Which sectioning method is used for rapid intraoperative diagnosis?",
-                options: ["Paraffin embedding", "Frozen section", "Cryostat section", "Microtome section"],
-                answer: "Frozen section",
-                explanation: "Frozen sections allow quick diagnosis during surgery."
-            },
-            {
-                q: "What is the ideal thickness for paraffin sections in brain histology?",
-                options: ["2 µm", "4 µm", "6 µm", "10 µm"],
-                answer: "4 µm",
-                explanation: "4 µm sections provide optimal resolution for brain tissue analysis."
-            },
-            {
-                q: "Which stain is used to detect iron deposits in brain hemorrhage?",
-                options: ["Prussian Blue", "Masson's Trichrome", "PAS", "H&E"],
-                answer: "Prussian Blue",
-                explanation: "Prussian Blue highlights iron, useful in hemorrhage detection."
-            },
-            {
-                q: "What is the purpose of using control slides in staining procedures?",
-                options: ["To test microscope quality", "To verify staining accuracy", "To calibrate section thickness", "To measure tissue pH"],
-                answer: "To verify staining accuracy",
-                explanation: "Control slides ensure stains are working correctly and reproducibly."
-            },
-            {
-                q: "Which marker is used to identify microglia in brain tissue?",
-                options: ["GFAP", "CD68", "Synaptophysin", "NeuN"],
-                answer: "CD68",
-                explanation: "CD68 is a marker for microglia and macrophages."
-            },
-            {
-                q: "What is the main hazard when handling formalin-fixed brain tissue?",
-                options: ["Radiation", "Chemical burns", "Formaldehyde exposure", "UV light"],
-                answer: "Formaldehyde exposure",
-                explanation: "Formaldehyde is toxic and requires proper ventilation and PPE."
-            },
-            {
-                q: "Which stain is used to highlight amyloid deposits in brain tissue?",
-                options: ["Congo red", "PAS", "H&E", "Silver stain"],
-                answer: "Congo red",
-                explanation: "Congo red stains amyloid, showing apple-green birefringence under polarized light."
-            },
-            {
-                q: "What is the role of Ki-67 staining in neuropathology?",
-                options: ["Detect inflammation", "Assess proliferation", "Identify neurons", "Highlight myelin"],
-                answer: "Assess proliferation",
-                explanation: "Ki-67 indicates cell proliferation, useful in tumor grading."
-            },
-            {
-                q: "Which technique is used to preserve antigenicity for immunohistochemistry?",
-                options: ["Heat fixation", "Cryopreservation", "Antigen retrieval", "Dehydration"],
-                answer: "Antigen retrieval",
-                explanation: "Antigen retrieval restores epitopes for antibody binding."
-            },
-            {
-                q: "What is the function of a cryostat in neuropathology labs?",
-                options: ["Embedding tissue", "Sectioning frozen tissue", "Fixing tissue", "Staining slides"],
-                answer: "Sectioning frozen tissue",
-                explanation: "Cryostats cut thin sections of frozen tissue for rapid analysis."
-            },
-            {
-                q: "Which stain is used to detect lipofuscin in aging brain tissue?",
-                options: ["Sudan Black", "PAS", "Congo red", "Luxol Fast Blue"],
-                answer: "Sudan Black",
-                explanation: "Sudan Black stains lipofuscin, a pigment in aging neurons."
-            },
-            {
-                q: "What is the recommended storage temperature for paraffin blocks?",
-                options: ["Room temperature", "4°C", "-20°C", "37°C"],
-                answer: "Room temperature",
-                explanation: "Paraffin blocks are stable at room temperature for long-term storage."
-            },
-            {
-                q: "Which stain is used to highlight neuronal cell bodies?",
-                options: ["Nissl stain", "H&E", "Luxol Fast Blue", "Congo red"],
-                answer: "Nissl stain",
-                explanation: "Nissl stain highlights rough ER in neurons, useful for identifying cell bodies."
-            },
-            {
-                q: "What is the purpose of mounting media in slide preparation?",
-                options: ["Fix tissue", "Enhance contrast", "Preserve stained sections", "Stain nuclei"],
-                answer: "Preserve stained sections",
-                explanation: "Mounting media protects stained tissue and maintains clarity under the microscope."
-            }
-        ];
+  <div id="quizContainer" style="display:none;">
+    <h2>Instructions</h2>
+    <p>Answer all 20 questions. Each correct answer earns 1 point. A score of 80% or higher will generate a certificate.</p>
+    <div id="questions"></div>
+    <button onclick="submitQuiz()">Submit Quiz</button>
+    <h3 id="scoreDisplay"></h3>
+    <div id="certificate"></div>
+  </div>
 
-        const quizContainer = document.getElementById("quiz");
+  <script>
+    const questions = [
+      {
+        q: "Which stain is commonly used to highlight myelin in brain tissue?",
+        options: ["H&E", "Luxol Fast Blue", "PAS", "Congo Red"],
+        answer: 1,
+        explanation: "Luxol Fast Blue is used to stain myelin, useful in demyelinating diseases."
+      },
+      {
+        q: "What is the purpose of using GFAP immunostaining?",
+        options: ["Identify neurons", "Detect astrocytes", "Highlight blood vessels", "Visualize microglia"],
+        answer: 1,
+        explanation: "GFAP is a marker for astrocytes and astrocytic tumors."
+      },
+      {
+        q: "Which fixative is most commonly used for brain tissue in histopathology?",
+        options: ["Formalin", "Alcohol", "Acetone", "Glutaraldehyde"],
+        answer: 0,
+        explanation: "Formalin is the standard fixative for preserving brain tissue morphology."
+      },
+      {
+        q: "What artefact is commonly seen in frozen sections?",
+        options: ["Shrinkage", "Crush artefact", "Freezing artefact", "Pigment deposition"],
+        answer: 2,
+        explanation: "Freezing artefact occurs due to ice crystal formation during rapid freezing."
+      },
+      {
+        q: "Which stain is used to detect fungal organisms in brain infections?",
+        options: ["Ziehl-Neelsen", "Gram stain", "GMS", "Masson's trichrome"],
+        answer: 2,
+        explanation: "GMS (Grocott's Methenamine Silver) stain highlights fungal cell walls."
+      },
+      {
+        q: "What is the role of cryostat in neuropathology labs?",
+        options: ["Embedding tissue", "Sectioning frozen tissue", "Fixing tissue", "Staining slides"],
+        answer: 1,
+        explanation: "Cryostat is used to cut thin sections of frozen tissue for rapid diagnosis."
+      },
+      {
+        q: "Which stain is used to detect amyloid deposits?",
+        options: ["Congo Red", "PAS", "H&E", "Toluidine Blue"],
+        answer: 0,
+        explanation: "Congo Red stain shows apple-green birefringence under polarized light for amyloid."
+      },
+      {
+        q: "What is the ideal thickness for paraffin sections in brain histology?",
+        options: ["2 µm", "4 µm", "6 µm", "10 µm"],
+        answer: 1,
+        explanation: "4 µm is standard for paraffin sections to balance resolution and tissue integrity."
+      },
+      {
+        q: "Which stain is used to highlight neurofibrillary tangles?",
+        options: ["Silver stain", "Masson's trichrome", "Oil Red O", "Alcian Blue"],
+        answer: 0,
+        explanation: "Silver stains like Bielschowsky highlight neurofibrillary tangles in Alzheimer's disease."
+      },
+      {
+        q: "What is the main hazard when handling brain tissue with prion disease?",
+        options: ["Radiation", "Chemical burns", "Infectivity", "Allergic reaction"],
+        answer: 2,
+        explanation: "Prion diseases are transmissible and require special handling precautions."
+      }
+    ];
 
-        questions.forEach((item, index) => {
-            const div = document.createElement("div");
-            div.className = "question";
-            div.innerHTML = `<p><strong>Q${index + 1}: ${item.q}</strong></p>` +
-                item.options.map(opt => `<label><input type="radio" name="q${index}" value="${opt}" onclick="checkAnswer(${index}, '${opt}')"> ${opt}</label><br>`).join('') +
-                `<p id="feedback${index}" class="feedback"></p>`;
-            quizContainer.appendChild(div);
+    function startQuiz() {
+      const name = document.getElementById("traineeName").value.trim();
+      if (!name) {
+        alert("Please enter your name.");
+        return;
+      }
+      document.getElementById("quizContainer").style.display = "block";
+      const qDiv = document.getElementById("questions");
+      qDiv.innerHTML = "";
+      questions.forEach((q, i) => {
+        const div = document.createElement("div");
+        div.className = "question";
+        div.innerHTML = `<strong>Q${i+1}: ${q.q}</strong><br>`;
+        q.options.forEach((opt, j) => {
+          div.innerHTML += `<label class="options"><input type="radio" name="q${i}" value="${j}">${opt}</label><br>`;
         });
+        div.innerHTML += `<div class="feedback" id="feedback${i}"></div>`;
+        qDiv.appendChild(div);
+      });
+    }
 
-        function checkAnswer(index, selected) {
-            const correct = questions[index].answer;
-            const explanation = questions[index].explanation;
-            const feedback = document.getElementById("feedback" + index);
-            if (selected === correct) {
-                feedback.style.color = "green";
-                feedback.textContent = "Correct! " + explanation;
-            } else {
-                feedback.style.color = "red";
-                feedback.textContent = "Incorrect. " + explanation;
-            }
-            feedback.style.display = "block";
+    function submitQuiz() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const feedback = document.getElementById(`feedback${i}`);
+        if (selected) {
+          const val = parseInt(selected.value);
+          if (val === q.answer) {
+            score++;
+            feedback.textContent = "✅ Correct! " + q.explanation;
+            feedback.style.color = "green";
+          } else {
+            feedback.textContent = "❌ Incorrect. " + q.explanation;
+            feedback.style.color = "red";
+          }
+        } else {
+          feedback.textContent = "❌ No answer selected.";
+          feedback.style.color = "red";
         }
-    </script>
-<div id="scoreDisplay" style="font-weight:bold; font-size:18px; margin-top:20px;"></div></body>
+      });
+      const percent = (score / questions.length) * 100;
+      document.getElementById("scoreDisplay").textContent = `Your score: ${score}/${questions.length} (${percent.toFixed(1)}%)`;
+
+      if (percent >= 80) {
+        const name = document.getElementById("traineeName").value.trim();
+        const cert = document.getElementById("certificate");
+        cert.style.display = "block";
+        cert.innerHTML = `<h2>🎓 Certificate of Completion</h2>
+                          <p>This certifies that <strong>${name}</strong> has successfully completed the Neuropathology Lab Techniques Quiz with a score of ${percent.toFixed(1)}%.</p>
+                          <p>Date: ${new Date().toLocaleDateString()}</p>`;
+      }
+    }
+  </script>
+</body>
 </html>
