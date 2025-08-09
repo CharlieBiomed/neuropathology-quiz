@@ -1,40 +1,211 @@
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Neuropathology Histopathology Quiz</title>
-    <style>
+<meta charset="utf-8"/>
+<title>Neuropathology Lab Techniques Quiz</title>
+<style>
         body { font-family: Arial, sans-serif; margin: 20px; }
         .question { margin-bottom: 20px; }
-        .explanation { display: none; margin-top: 10px; color: green; }
-        .option { margin-left: 20px; }
-        button { margin-top: 10px; }
+        .feedback { color: green; display: none; }
     </style>
-    <script>
-        function showExplanation(qNum, correctIndex) {
-            const radios = document.getElementsByName('q' + qNum);
-            let selected = -1;
-            for (let i = 0; i < radios.length; i++) {
-                if (radios[i].checked) {
-                    selected = i;
-                    break;
-                }
-            }
-            const explanation = document.getElementById('exp' + qNum);
-            if (selected === correctIndex) {
-                explanation.style.color = 'green';
-                explanation.innerHTML = "Correct! " + explanation.getAttribute("data-text");
+<script>
+let score = 0;
+let totalQuestions = document.querySelectorAll('.question').length;
+
+function checkAnswer(button, correct) {
+    if (button.classList.contains('answered')) return;
+    button.classList.add('answered');
+    if (correct) {
+        score++;
+        button.style.backgroundColor = '#c8e6c9';
+    } else {
+        button.style.backgroundColor = '#ffcdd2';
+    }
+    let feedback = button.parentElement.querySelector('.feedback');
+    if (feedback) feedback.style.display = 'block';
+
+    // Check if all questions have been answered
+    let answeredButtons = document.querySelectorAll('.answered');
+    if (answeredButtons.length === totalQuestions) {
+        document.getElementById('scoreDisplay').innerText =
+            "Final Score: " + score + " out of " + totalQuestions;
+    }
+}
+</script>
+</head>
+<body><div style="border:1px solid #ccc; padding:15px; margin-bottom:20px; background-color:#f9f9f9;"><h2>📘 Instructions for Using This Quiz</h2><ul><li>Enter your name in the field provided at the top of the quiz.</li><li>Answer each multiple-choice question by selecting the best option.</li><li>After each selection, you will receive instant feedback.</li><li>Your score will be tracked and displayed at the end of the quiz.</li><li>You can retake the quiz by refreshing the page.</li></ul></div>
+<div id="name-entry" style="margin-bottom: 20px;">
+<label for="traineeName"><strong>Enter your name:</strong></label>
+<input id="traineeName" name="traineeName" placeholder="Your name" type="text"/>
+<button onclick="startQuiz()">Start Quiz</button>
+</div>
+<div id="traineeDisplay" style="display:none; margin-bottom: 20px;">
+<h2>Welcome, <span id="displayName"></span>!</h2>
+</div>
+<div id="quiz" style="display:none;">
+</div>
+<script>
+        function startQuiz() {
+            var name = document.getElementById("traineeName").value;
+            if (name.trim() !== "") {
+                document.getElementById("displayName").textContent = name;
+                document.getElementById("traineeDisplay").style.display = "block";
+                document.getElementById("name-entry").style.display = "none";
+                document.getElementById("quiz").style.display = "block";
             } else {
-                explanation.style.color = 'red';
-                explanation.innerHTML = "Incorrect. " + explanation.getAttribute("data-text");
+                alert("Please enter your name.");
             }
-            explanation.style.display = 'block';
+        }
+
+        const questions = [
+            {
+                q: "Which stain is commonly used to highlight myelin in brain tissue?",
+                options: ["H&E", "Luxol Fast Blue", "PAS", "Silver stain"],
+                answer: "Luxol Fast Blue",
+                explanation: "Luxol Fast Blue is specific for myelin, useful in identifying demyelination."
+            },
+            {
+                q: "What is the purpose of GFAP immunostaining?",
+                options: ["Identify neurons", "Detect astrocytes", "Highlight blood vessels", "Stain microglia"],
+                answer: "Detect astrocytes",
+                explanation: "GFAP is a marker for astrocytes and astrocytic tumors."
+            },
+            {
+                q: "Which fixative is most commonly used for brain tissue?",
+                options: ["Formalin", "Alcohol", "Acetone", "Bouin's solution"],
+                answer: "Formalin",
+                explanation: "Formalin preserves brain tissue morphology effectively for histopathology."
+            },
+            {
+                q: "What artefact is caused by delayed fixation of brain tissue?",
+                options: ["Freezing artefact", "Autolysis", "Crush artefact", "Pigment deposition"],
+                answer: "Autolysis",
+                explanation: "Delayed fixation leads to autolysis, degrading tissue quality."
+            },
+            {
+                q: "Which stain is used to detect fungal organisms in brain infections?",
+                options: ["Gram stain", "Ziehl-Neelsen", "PAS", "Congo red"],
+                answer: "PAS",
+                explanation: "PAS highlights fungal cell walls, useful in diagnosing fungal infections."
+            },
+            {
+                q: "What is the role of silver staining in neuropathology?",
+                options: ["Detect bacteria", "Highlight neurofibrillary tangles", "Stain astrocytes", "Identify myelin"],
+                answer: "Highlight neurofibrillary tangles",
+                explanation: "Silver stains are used to visualize tangles in neurodegenerative diseases."
+            },
+            {
+                q: "Which sectioning method is used for rapid intraoperative diagnosis?",
+                options: ["Paraffin embedding", "Frozen section", "Cryostat section", "Microtome section"],
+                answer: "Frozen section",
+                explanation: "Frozen sections allow quick diagnosis during surgery."
+            },
+            {
+                q: "What is the ideal thickness for paraffin sections in brain histology?",
+                options: ["2 µm", "4 µm", "6 µm", "10 µm"],
+                answer: "4 µm",
+                explanation: "4 µm sections provide optimal resolution for brain tissue analysis."
+            },
+            {
+                q: "Which stain is used to detect iron deposits in brain hemorrhage?",
+                options: ["Prussian Blue", "Masson's Trichrome", "PAS", "H&E"],
+                answer: "Prussian Blue",
+                explanation: "Prussian Blue highlights iron, useful in hemorrhage detection."
+            },
+            {
+                q: "What is the purpose of using control slides in staining procedures?",
+                options: ["To test microscope quality", "To verify staining accuracy", "To calibrate section thickness", "To measure tissue pH"],
+                answer: "To verify staining accuracy",
+                explanation: "Control slides ensure stains are working correctly and reproducibly."
+            },
+            {
+                q: "Which marker is used to identify microglia in brain tissue?",
+                options: ["GFAP", "CD68", "Synaptophysin", "NeuN"],
+                answer: "CD68",
+                explanation: "CD68 is a marker for microglia and macrophages."
+            },
+            {
+                q: "What is the main hazard when handling formalin-fixed brain tissue?",
+                options: ["Radiation", "Chemical burns", "Formaldehyde exposure", "UV light"],
+                answer: "Formaldehyde exposure",
+                explanation: "Formaldehyde is toxic and requires proper ventilation and PPE."
+            },
+            {
+                q: "Which stain is used to highlight amyloid deposits in brain tissue?",
+                options: ["Congo red", "PAS", "H&E", "Silver stain"],
+                answer: "Congo red",
+                explanation: "Congo red stains amyloid, showing apple-green birefringence under polarized light."
+            },
+            {
+                q: "What is the role of Ki-67 staining in neuropathology?",
+                options: ["Detect inflammation", "Assess proliferation", "Identify neurons", "Highlight myelin"],
+                answer: "Assess proliferation",
+                explanation: "Ki-67 indicates cell proliferation, useful in tumor grading."
+            },
+            {
+                q: "Which technique is used to preserve antigenicity for immunohistochemistry?",
+                options: ["Heat fixation", "Cryopreservation", "Antigen retrieval", "Dehydration"],
+                answer: "Antigen retrieval",
+                explanation: "Antigen retrieval restores epitopes for antibody binding."
+            },
+            {
+                q: "What is the function of a cryostat in neuropathology labs?",
+                options: ["Embedding tissue", "Sectioning frozen tissue", "Fixing tissue", "Staining slides"],
+                answer: "Sectioning frozen tissue",
+                explanation: "Cryostats cut thin sections of frozen tissue for rapid analysis."
+            },
+            {
+                q: "Which stain is used to detect lipofuscin in aging brain tissue?",
+                options: ["Sudan Black", "PAS", "Congo red", "Luxol Fast Blue"],
+                answer: "Sudan Black",
+                explanation: "Sudan Black stains lipofuscin, a pigment in aging neurons."
+            },
+            {
+                q: "What is the recommended storage temperature for paraffin blocks?",
+                options: ["Room temperature", "4°C", "-20°C", "37°C"],
+                answer: "Room temperature",
+                explanation: "Paraffin blocks are stable at room temperature for long-term storage."
+            },
+            {
+                q: "Which stain is used to highlight neuronal cell bodies?",
+                options: ["Nissl stain", "H&E", "Luxol Fast Blue", "Congo red"],
+                answer: "Nissl stain",
+                explanation: "Nissl stain highlights rough ER in neurons, useful for identifying cell bodies."
+            },
+            {
+                q: "What is the purpose of mounting media in slide preparation?",
+                options: ["Fix tissue", "Enhance contrast", "Preserve stained sections", "Stain nuclei"],
+                answer: "Preserve stained sections",
+                explanation: "Mounting media protects stained tissue and maintains clarity under the microscope."
+            }
+        ];
+
+        const quizContainer = document.getElementById("quiz");
+
+        questions.forEach((item, index) => {
+            const div = document.createElement("div");
+            div.className = "question";
+            div.innerHTML = `<p><strong>Q${index + 1}: ${item.q}</strong></p>` +
+                item.options.map(opt => `<label><input type="radio" name="q${index}" value="${opt}" onclick="checkAnswer(${index}, '${opt}')"> ${opt}</label><br>`).join('') +
+                `<p id="feedback${index}" class="feedback"></p>`;
+            quizContainer.appendChild(div);
+        });
+
+        function checkAnswer(index, selected) {
+            const correct = questions[index].answer;
+            const explanation = questions[index].explanation;
+            const feedback = document.getElementById("feedback" + index);
+            if (selected === correct) {
+                feedback.style.color = "green";
+                feedback.textContent = "Correct! " + explanation;
+            } else {
+                feedback.style.color = "red";
+                feedback.textContent = "Incorrect. " + explanation;
+            }
+            feedback.style.display = "block";
         }
     </script>
-</head>
-<body>
-    <h1>Neuropathology Histopathology Quiz</h1>
-<div class="question"><strong>Q1: What are the key histological features of glioblastoma multiforme?</strong><br><label class="option"><input type="radio" name="q0" value="0"> Rosenthal fibers and low mitotic activity</label><br><label class="option"><input type="radio" name="q0" value="1"> Necrosis with pseudopalisading and microvascular proliferation</label><br><label class="option"><input type="radio" name="q0" value="2"> Chicken-wire capillaries and fried egg cells</label><br><label class="option"><input type="radio" name="q0" value="3"> Psammoma bodies and whorled patterns</label><br><button onclick="showExplanation(0, 1)">Submit Answer</button><div id="exp0" class="explanation" data-text="Glioblastoma shows pleomorphic astrocytic cells, necrosis with pseudopalisading, microvascular proliferation, and high mitotic activity."></div></div><div class="question"><strong>Q2: How can you differentiate between primary and secondary brain tumors histologically?</strong><br><label class="option"><input type="radio" name="q1" value="0"> Primary tumors show glandular features</label><br><label class="option"><input type="radio" name="q1" value="1"> Secondary tumors show glial differentiation</label><br><label class="option"><input type="radio" name="q1" value="2"> Primary tumors often show glial or neuronal differentiation</label><br><label class="option"><input type="radio" name="q1" value="3"> Secondary tumors originate in the CNS</label><br><button onclick="showExplanation(1, 2)">Submit Answer</button><div id="exp1" class="explanation" data-text="Primary tumors originate in the CNS and often show glial or neuronal differentiation. Secondary tumors resemble the primary site and often have sharp borders."></div></div><div class="question"><strong>Q3: What is the significance of Rosenthal fibers in neuropathology?</strong><br><label class="option"><input type="radio" name="q2" value="0"> They indicate acute inflammation</label><br><label class="option"><input type="radio" name="q2" value="1"> They are found in chronic gliosis and pilocytic astrocytomas</label><br><label class="option"><input type="radio" name="q2" value="2"> They are markers for metastatic tumors</label><br><label class="option"><input type="radio" name="q2" value="3"> They are diagnostic of meningiomas</label><br><button onclick="showExplanation(2, 1)">Submit Answer</button><div id="exp2" class="explanation" data-text="Rosenthal fibers are elongated eosinophilic structures found in chronic gliosis and pilocytic astrocytomas."></div></div><div class="question"><strong>Q4: Describe the histopathological changes seen in Alzheimer’s disease.</strong><br><label class="option"><input type="radio" name="q3" value="0"> Neurofibrillary tangles and amyloid plaques</label><br><label class="option"><input type="radio" name="q3" value="1"> Demyelination and macrophage infiltration</label><br><label class="option"><input type="radio" name="q3" value="2"> Necrosis and pseudopalisading</label><br><label class="option"><input type="radio" name="q3" value="3"> Psammoma bodies and whorled patterns</label><br><button onclick="showExplanation(3, 0)">Submit Answer</button><div id="exp3" class="explanation" data-text="Alzheimer’s shows neurofibrillary tangles (tau protein), amyloid plaques (Aβ), and neuronal loss."></div></div><div class="question"><strong>Q5: What are the typical microscopic features of multiple sclerosis plaques?</strong><br><label class="option"><input type="radio" name="q4" value="0"> Neurofibrillary tangles and amyloid plaques</label><br><label class="option"><input type="radio" name="q4" value="1"> Demyelination and perivascular lymphocytic infiltration</label><br><label class="option"><input type="radio" name="q4" value="2"> Rosenthal fibers and low mitotic activity</label><br><label class="option"><input type="radio" name="q4" value="3"> Psammoma bodies and whorled patterns</label><br><button onclick="showExplanation(4, 1)">Submit Answer</button><div id="exp4" class="explanation" data-text="MS plaques show demyelination, perivascular lymphocytic infiltration, macrophages with myelin debris, and reactive astrocytosis."></div></div>
-</body>
+<div id="scoreDisplay" style="font-weight:bold; font-size:18px; margin-top:20px;"></div></body>
 </html>
