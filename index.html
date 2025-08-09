@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neuropathology Histopathology Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .question { margin-bottom: 20px; }
+        .explanation { display: none; margin-top: 10px; color: green; }
+        .option { margin-left: 20px; }
+        button { margin-top: 10px; }
+    </style>
+    <script>
+        function showExplanation(qNum, correctIndex) {
+            const radios = document.getElementsByName('q' + qNum);
+            let selected = -1;
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    selected = i;
+                    break;
+                }
+            }
+            const explanation = document.getElementById('exp' + qNum);
+            if (selected === correctIndex) {
+                explanation.style.color = 'green';
+                explanation.innerHTML = "Correct! " + explanation.getAttribute("data-text");
+            } else {
+                explanation.style.color = 'red';
+                explanation.innerHTML = "Incorrect. " + explanation.getAttribute("data-text");
+            }
+            explanation.style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <h1>Neuropathology Histopathology Quiz</h1>
+<div class="question"><strong>Q1: What are the key histological features of glioblastoma multiforme?</strong><br><label class="option"><input type="radio" name="q0" value="0"> Rosenthal fibers and low mitotic activity</label><br><label class="option"><input type="radio" name="q0" value="1"> Necrosis with pseudopalisading and microvascular proliferation</label><br><label class="option"><input type="radio" name="q0" value="2"> Chicken-wire capillaries and fried egg cells</label><br><label class="option"><input type="radio" name="q0" value="3"> Psammoma bodies and whorled patterns</label><br><button onclick="showExplanation(0, 1)">Submit Answer</button><div id="exp0" class="explanation" data-text="Glioblastoma shows pleomorphic astrocytic cells, necrosis with pseudopalisading, microvascular proliferation, and high mitotic activity."></div></div><div class="question"><strong>Q2: How can you differentiate between primary and secondary brain tumors histologically?</strong><br><label class="option"><input type="radio" name="q1" value="0"> Primary tumors show glandular features</label><br><label class="option"><input type="radio" name="q1" value="1"> Secondary tumors show glial differentiation</label><br><label class="option"><input type="radio" name="q1" value="2"> Primary tumors often show glial or neuronal differentiation</label><br><label class="option"><input type="radio" name="q1" value="3"> Secondary tumors originate in the CNS</label><br><button onclick="showExplanation(1, 2)">Submit Answer</button><div id="exp1" class="explanation" data-text="Primary tumors originate in the CNS and often show glial or neuronal differentiation. Secondary tumors resemble the primary site and often have sharp borders."></div></div><div class="question"><strong>Q3: What is the significance of Rosenthal fibers in neuropathology?</strong><br><label class="option"><input type="radio" name="q2" value="0"> They indicate acute inflammation</label><br><label class="option"><input type="radio" name="q2" value="1"> They are found in chronic gliosis and pilocytic astrocytomas</label><br><label class="option"><input type="radio" name="q2" value="2"> They are markers for metastatic tumors</label><br><label class="option"><input type="radio" name="q2" value="3"> They are diagnostic of meningiomas</label><br><button onclick="showExplanation(2, 1)">Submit Answer</button><div id="exp2" class="explanation" data-text="Rosenthal fibers are elongated eosinophilic structures found in chronic gliosis and pilocytic astrocytomas."></div></div><div class="question"><strong>Q4: Describe the histopathological changes seen in Alzheimer’s disease.</strong><br><label class="option"><input type="radio" name="q3" value="0"> Neurofibrillary tangles and amyloid plaques</label><br><label class="option"><input type="radio" name="q3" value="1"> Demyelination and macrophage infiltration</label><br><label class="option"><input type="radio" name="q3" value="2"> Necrosis and pseudopalisading</label><br><label class="option"><input type="radio" name="q3" value="3"> Psammoma bodies and whorled patterns</label><br><button onclick="showExplanation(3, 0)">Submit Answer</button><div id="exp3" class="explanation" data-text="Alzheimer’s shows neurofibrillary tangles (tau protein), amyloid plaques (Aβ), and neuronal loss."></div></div><div class="question"><strong>Q5: What are the typical microscopic features of multiple sclerosis plaques?</strong><br><label class="option"><input type="radio" name="q4" value="0"> Neurofibrillary tangles and amyloid plaques</label><br><label class="option"><input type="radio" name="q4" value="1"> Demyelination and perivascular lymphocytic infiltration</label><br><label class="option"><input type="radio" name="q4" value="2"> Rosenthal fibers and low mitotic activity</label><br><label class="option"><input type="radio" name="q4" value="3"> Psammoma bodies and whorled patterns</label><br><button onclick="showExplanation(4, 1)">Submit Answer</button><div id="exp4" class="explanation" data-text="MS plaques show demyelination, perivascular lymphocytic infiltration, macrophages with myelin debris, and reactive astrocytosis."></div></div>
+</body>
+</html>
